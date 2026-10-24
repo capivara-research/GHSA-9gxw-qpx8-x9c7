@@ -9,10 +9,12 @@ Public research evidence and safe local-lab reproduction material for stored cro
 | Field | Value |
 |---|---|
 | Product | LaraDashboard |
+| Product repository | [`laradashboard/laradashboard`](https://github.com/laradashboard/laradashboard) |
 | Affected versions | `>= 0.9.0, <= 1.2.2` |
 | Tested revision | `9dc1335835701651aef3adcb3e885acecb32402c` |
 | Weakness | CWE-79, CWE-434 |
 | Severity | Medium — CVSS 3.1 `5.4` |
+| CVSS vector | `CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:L/I:L/A:N` |
 | Required permission | `media.create` |
 | Advisory | `GHSA-9gxw-qpx8-x9c7` |
 
@@ -23,6 +25,16 @@ The production upload pipeline accepts SVG files without sanitizing active conte
 ## Root cause
 
 Outside demo mode, `MediaUploadRequest` applies only generic file and size validation. SVG is explicitly recognized as `image/svg+xml`, while the subsequent checks validate extension/MIME consistency but never sanitize the SVG DOM or reject scripts and event handlers.
+
+## Technical targets
+
+| Item | Value |
+|---|---|
+| Upload endpoint | `POST /admin/media` |
+| Attacker-controlled parameter | Multipart field `files[]` |
+| Request validation | `app/Http/Requests/MediaUploadRequest.php` |
+| Media processing | `app/Concerns/HandlesMediaOperations.php` |
+| Dangerous input | Active SVG content, including `<script>` and event handlers |
 
 ## Reproduction
 
@@ -52,6 +64,13 @@ JavaScript executes in the dashboard origin after user interaction. When opened 
 ## Disclosure
 
 Reported through GitHub Private Vulnerability Reporting and published by the project on 2026-08-30. Reporter credit: [capivara-research](https://github.com/capivara-research).
+
+## References
+
+- [LaraDashboard product repository](https://github.com/laradashboard/laradashboard)
+- [Published GitHub Security Advisory](https://github.com/laradashboard/laradashboard/security/advisories/GHSA-9gxw-qpx8-x9c7)
+- [CWE-79](https://cwe.mitre.org/data/definitions/79.html)
+- [CWE-434](https://cwe.mitre.org/data/definitions/434.html)
 
 ## Legal and safety notice
 

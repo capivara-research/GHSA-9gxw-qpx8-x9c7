@@ -1,5 +1,7 @@
 # GHSA-9gxw-qpx8-x9c7 — LaraDashboard stored XSS via SVG upload
 
+> CVE assigned: **[CVE-2026-90931](https://www.cve.org/CVERecord?id=CVE-2026-90931)**. The maintained CVE repository is [capivara-research/CVE-2026-90931](https://github.com/capivara-research/CVE-2026-90931).
+
 [Português do Brasil](README.pt-BR.md) · [Official advisory](https://github.com/laradashboard/laradashboard/security/advisories/GHSA-9gxw-qpx8-x9c7)
 
 Public research evidence and safe local-lab reproduction material for stored cross-site scripting in LaraDashboard's media library.
